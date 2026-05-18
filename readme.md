@@ -24,9 +24,5 @@ Developed SPARQL queries
 Assisted with backend routes and data handling
 Designed frontend pages
 
-#Acknowledgments
-
-Apache Jena
-Protégé
 D3.js
 Spring Boot
