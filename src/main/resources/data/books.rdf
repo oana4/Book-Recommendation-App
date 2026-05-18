@@ -1,0 +1,49 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rec="http://example.com/book-recommendation#">
+  <rec:Book rdf:about="http://example.com/book-recommendation#Dune">
+    <rec:author>Frank Herbert</rec:author>
+    <rec:description>A science fiction and fantasy novel about politics, ecology, power, and survival on the desert planet Arrakis.</rec:description>
+    <rec:title>Dune</rec:title>
+    <rec:theme>Fantasy</rec:theme>
+    <rec:theme>Science Fiction</rec:theme>
+    <rec:suitableReadingLevel>Advanced</rec:suitableReadingLevel>
+  </rec:Book>
+  <rec:User rdf:about="http://example.com/book-recommendation#Alice">
+    <rec:preferredTheme>Science Fiction</rec:preferredTheme>
+    <rec:readingLevel>Intermediate</rec:readingLevel>
+    <rec:name>Alice</rec:name>
+  </rec:User>
+  <rec:Book rdf:about="http://example.com/book-recommendation#TheSilentPatient">
+    <rec:author>Alex Michaelides</rec:author>
+    <rec:description>A mystery novel about a silent patient, a shocking crime, and the search for the truth behind it.</rec:description>
+    <rec:suitableReadingLevel>Intermediate</rec:suitableReadingLevel>
+    <rec:theme>Murder</rec:theme>
+    <rec:theme>Mystery</rec:theme>
+    <rec:title>The Silent Patient</rec:title>
+  </rec:Book>
+  <rec:User rdf:about="http://example.com/book-recommendation#Bob">
+    <rec:preferredTheme>Mystery</rec:preferredTheme>
+    <rec:readingLevel>Beginner</rec:readingLevel>
+    <rec:name>Bob</rec:name>
+  </rec:User>
+  <rec:RecommendationRule rdf:about="http://example.com/book-recommendation#RecommendedBookRule">
+    <rec:condition>To be a recommended book for a user, a book must belong to the user's preferred theme and match the user's reading level.</rec:condition>
+  </rec:RecommendationRule>
+  <rec:Book rdf:about="http://example.com/book-recommendation#HungerGames">
+    <rec:author>Suzanne Collins</rec:author>
+    <rec:suitableReadingLevel>Intermediate</rec:suitableReadingLevel>
+    <rec:description>A dystopian science fiction story about survival, courage, and rebellion in a dangerous televised competition.</rec:description>
+    <rec:theme>Fantasy</rec:theme>
+    <rec:theme>Science Fiction</rec:theme>
+    <rec:title>Hunger Games</rec:title>
+  </rec:Book>
+  <rec:Book rdf:about="http://example.com/book-recommendation#HarryPotter">
+    <rec:author>Gigel</rec:author>
+    <rec:description>A fantasy adventure about magic, friendship, courage, and a young wizard discovering his place in a hidden world.</rec:description>
+    <rec:title>Harry Potter</rec:title>
+    <rec:theme>Fantasy</rec:theme>
+    <rec:theme>Adventure</rec:theme>
+    <rec:suitableReadingLevel>Intermediate</rec:suitableReadingLevel>
+  </rec:Book>
+</rdf:RDF>

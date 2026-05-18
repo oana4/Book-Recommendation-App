@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RDF Graph</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar glass">
+        <a class="brand" th:href="@{/recommendations}">Book Aura</a>
+        <div class="nav-links">
+            <a th:href="@{/recommendations}">Recommendations</a>
+            <a th:href="@{/books}">All books</a>
+            <a th:href="@{/rdf}">RDF graph</a>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </nav>
+
+    <main class="page-shell rdf-page-shell">
+        <section class="dashboard-hero glass">
+            <p class="eyebrow">RDF/XML visualizer</p>
+            <h1>Upload and visualize your graph.</h1>
+        </section>
+
+        <section class="rdf-stacked-layout">
+            <article class="upload-card glass">
+                <h2>Choose RDF/XML file</h2>
+                <p>The server parses the RDF/XML file, extracts RDF triples, and sends the subject-predicate-object graph to this page.</p>
+
+                <form th:action="@{/rdf}" method="post" enctype="multipart/form-data" class="upload-form">
+                    <label for="file">RDF/XML file</label>
+                    <input id="file" name="file" type="file" accept=".rdf,.xml,application/rdf+xml,text/xml" required>
+                    <button type="submit">Visualize graph</button>
+                </form>
+
+                <p class="error" th:if="${error}" th:text="${error}"></p>
+            </article>
+
+            <article class="graph-card glass full-graph-card" th:if="${graph != null}">
+                <div class="graph-header">
+                    <div>
+                        <p class="eyebrow">Graph result</p>
+                        <h2 th:text="${fileName}">books.rdf</h2>
+                    </div>
+                    <div class="graph-stats">
+                        <span><strong th:text="${graph.nodes.size()}">0</strong> nodes</span>
+                        <span><strong th:text="${graph.edges.size()}">0</strong> triples</span>
+                    </div>
+                </div>
+
+                <div id="rdfGraph" class="force-graph"
+                     th:attr="data-nodes=${graph.nodesJson}, data-edges=${graph.edgesJson}">
+                </div>
+
+                <div class="triple-list">
+                    <h3>Extracted RDF triples</h3>
+                    <div class="triple-row" th:each="edge : ${graph.edges}">
+                        <span th:text="${edge.source}">Subject</span>
+                        <em th:text="${edge.label}">predicate</em>
+                        <span th:text="${edge.target}">Object</span>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script th:src="@{/js/rdf-graph.js}"></script>
+</body>
+</html>

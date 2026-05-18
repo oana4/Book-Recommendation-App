@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${book.title}">Book Details</title>
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar glass">
+        <a class="brand" th:href="@{/recommendations}">Book Aura</a>
+        <div class="nav-links">
+            <a th:href="@{/recommendations}">Recommendations</a>
+            <a th:href="@{/books}">All books</a>
+            <a th:href="@{/rdf}">RDF graph</a>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </nav>
+
+    <main class="page-shell">
+        <a class="back-link" th:href="@{/books}">Back to all books</a>
+
+        <section class="book-detail glass" th:style="'--accent:' + ${book.accentColor}">
+            <div class="book-orb"></div>
+            <p class="eyebrow">RDF book details</p>
+            <h1 th:text="${book.title}">Book title</h1>
+            <div class="profile-grid">
+                <div>
+                    <span>Reading level</span>
+                    <strong th:text="${book.readingLevel}">Beginner</strong>
+                </div>
+                <div>
+                    <span>Source</span>
+                    <strong>RDF/XML</strong>
+                </div>
+            </div>
+            <div class="chip-row">
+                <em th:each="theme : ${book.themes}" th:text="${theme}">Theme</em>
+            </div>
+            <p class="hero-text" th:text="${book.description}">Description</p>
+        </section>
+    </main>
+    <section class="chatbot-widget">
+        <button id="chatToggle" class="chat-toggle">Chat</button>
+        <div id="chatPanel" class="chat-panel glass">
+            <h3>Book assistant</h3>
+            <div id="chatStarters" class="chat-starters"></div>
+            <div id="chatMessages" class="chat-messages"></div>
+            <form id="chatForm" class="chat-form">
+                <input id="chatInput" placeholder="Ask about this RDF book..." required>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </section>
+    <script id="chatbotContext" type="application/json" th:inline="javascript">
+        {
+          "pageContext": "Book details page for [(${book.title})] by [(${book.author})], themes [(${#strings.listJoin(book.themes, ', ')})], reading level [(${book.readingLevel})].",
+          "starters": [
+            "Who wrote [(${book.title})]?",
+            "What themes does [(${book.title})] have?",
+            "Is [(${book.title})] good for my reading profile?"
+          ]
+        }
+    </script>
+    <script th:src="@{/js/chatbot.js}"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Books</title>
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar glass">
+        <a class="brand" th:href="@{/recommendations}">Book Aura</a>
+        <div class="nav-links">
+            <a th:href="@{/recommendations}">Recommendations</a>
+            <a th:href="@{/books}">All books</a>
+            <a th:href="@{/rdf}">RDF graph</a>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </nav>
+
+    <main class="page-shell">
+        <section class="dashboard-hero glass">
+            <p class="eyebrow">Explore mode</p>
+            <h1>All uploaded books.</h1>
+            <p class="hero-text">Browse the RDF/XML library and add or update books with Apache Jena.</p>
+        </section>
+
+        <section class="library-tools">
+            <form class="book-form glass" th:action="@{/books}" method="post">
+                <div>
+                    <p class="eyebrow">Add RDF book</p>
+                    <h2>Add book</h2>
+                </div>
+                <div class="form-row">
+                    <label for="title">Title</label>
+                    <input id="title" name="title" placeholder="Example: Harry Potter" required>
+                </div>
+                <div class="form-row">
+                    <label for="themes">Themes</label>
+                    <input id="themes" name="themes" placeholder="Example: Fantasy, Adventure" required>
+                </div>
+                <div class="form-row">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" placeholder="Write a short description for this book." required></textarea>
+                </div>
+                <div class="form-row">
+                    <label for="readingLevel">Reading level</label>
+                    <select id="readingLevel" name="readingLevel" required>
+                        <option>Beginner</option>
+                        <option selected>Intermediate</option>
+                        <option>Advanced</option>
+                    </select>
+                </div>
+                <button type="submit">Save book to RDF</button>
+            </form>
+
+            <form class="book-form glass" th:action="@{/books/reading-level}" method="post">
+                <div>
+                    <p class="eyebrow">Modify RDF book</p>
+                    <h2>Change reading level</h2>
+                </div>
+                <div class="form-row">
+                    <label for="editTitle">Book title</label>
+                    <input id="editTitle" name="title" placeholder="Example: Hunger Games" required>
+                </div>
+                <div class="form-row">
+                    <label for="editReadingLevel">New reading level</label>
+                    <select id="editReadingLevel" name="readingLevel" required>
+                        <option>Beginner</option>
+                        <option selected>Intermediate</option>
+                        <option>Advanced</option>
+                    </select>
+                </div>
+                <button type="submit">Update RDF level</button>
+            </form>
+        </section>
+
+        <p class="success" th:if="${success}" th:text="${success}">Saved.</p>
+        <p class="error" th:if="${error}" th:text="${error}">Error.</p>
+
+        <section class="book-grid">
+            <article class="book-card glass" th:each="book : ${books}" th:style="'--accent:' + ${book.accentColor}">
+                <div class="book-orb"></div>
+                <p th:text="${book.readingLevel}">Beginner</p>
+                <h3 th:text="${book.title}">Book title</h3>
+                <div class="chip-row">
+                    <em th:each="theme : ${book.themes}" th:text="${theme}">Theme</em>
+                </div>
+                <p th:text="${book.description}">Description</p>
+                <a class="book-link" th:href="@{/books/{title}(title=${book.title})}">View details</a>
+            </article>
+        </section>
+    </main>
+    <section class="chatbot-widget">
+        <button id="chatToggle" class="chat-toggle">Chat</button>
+        <div id="chatPanel" class="chat-panel glass">
+            <h3>Book assistant</h3>
+            <div id="chatStarters" class="chat-starters"></div>
+            <div id="chatMessages" class="chat-messages"></div>
+            <form id="chatForm" class="chat-form">
+                <input id="chatInput" placeholder="Ask about RDF books..." required>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </section>
+    <script id="chatbotContext" type="application/json">
+        {
+          "pageContext": "All books page showing the RDF/XML book list.",
+          "starters": [
+            "What is a book that I am most likely to enjoy from this list?",
+            "What book has the author Frank Herbert and the theme Science Fiction?",
+            "Which books have the Fantasy theme?"
+          ]
+        }
+    </script>
+    <script th:src="@{/js/chatbot.js}"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Recommendations</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar glass">
+        <a class="brand" th:href="@{/recommendations}">Book Aura</a>
+        <div class="nav-links">
+            <a th:href="@{/recommendations}">Recommendations</a>
+            <a th:href="@{/books}">All books</a>
+            <a th:href="@{/rdf}">RDF graph</a>
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </nav>
+
+    <main class="page-shell">
+        <section class="dashboard-hero glass">
+            <p class="eyebrow">Hello, <span th:text="${user.displayName}">Alice</span></p>
+            <h1>Your reading profile is glowing.</h1>
+            <div class="profile-grid">
+                <div>
+                    <span>Preferred theme</span>
+                    <strong th:text="${user.preferredTheme}">Science Fiction</strong>
+                </div>
+                <div>
+                    <span>Reading level</span>
+                    <strong th:text="${user.readingLevel}">Intermediate</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-heading">
+            <p class="eyebrow">Exact semantic matches</p>
+            <h2>Recommended books</h2>
+        </section>
+
+        <section class="empty-state glass" th:if="${recommendedBooks.isEmpty()}">
+            <h3>No perfect recommendation found yet.</h3>
+            <p>The rule requires both the preferred theme and reading level to match. Based on the given RDF scenario, no book currently satisfies both conditions for this user.</p>
+        </section>
+
+        <section class="book-grid" th:if="${!recommendedBooks.isEmpty()}">
+            <article class="book-card glass" th:each="book : ${recommendedBooks}" th:style="'--accent:' + ${book.accentColor}">
+                <div class="book-orb"></div>
+                <p th:text="${book.readingLevel}">Beginner</p>
+                <h3 th:text="${book.title}">Book title</h3>
+                <span th:text="${book.author}">Author</span>
+                <div class="chip-row">
+                    <em th:each="theme : ${book.themes}" th:text="${theme}">Theme</em>
+                </div>
+                <p th:text="${book.description}">Description</p>
+            </article>
+        </section>
+
+        <section class="section-heading">
+            <p class="eyebrow">Close but not exact</p>
+            <h2>Books with your preferred theme</h2>
+        </section>
+
+        <section class="book-grid">
+            <article class="book-card glass" th:each="book : ${themeMatches}" th:style="'--accent:' + ${book.accentColor}">
+                <div class="book-orb"></div>
+                <p th:text="${book.readingLevel}">Beginner</p>
+                <h3 th:text="${book.title}">Book title</h3>
+                <span th:text="${book.author}">Author</span>
+                <div class="chip-row">
+                    <em th:each="theme : ${book.themes}" th:text="${theme}">Theme</em>
+                </div>
+                <p th:text="${book.description}">Description</p>
+            </article>
+        </section>
+    </main>
+    <section class="chatbot-widget">
+        <button id="chatToggle" class="chat-toggle">Chat</button>
+        <div id="chatPanel" class="chat-panel glass">
+            <h3>Book assistant</h3>
+            <div id="chatStarters" class="chat-starters"></div>
+            <div id="chatMessages" class="chat-messages"></div>
+            <form id="chatForm" class="chat-form">
+                <input id="chatInput" placeholder="Ask about RDF books..." required>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </section>
+    <script id="chatbotContext" type="application/json" th:inline="javascript">
+        {
+          "pageContext": "Recommendations page for [(${user.displayName})], preferred theme [(${user.preferredTheme})], reading level [(${user.readingLevel})].",
+          "starters": [
+            "What book am I most likely to enjoy?",
+            "Which RDF books match my preferred theme?",
+            "Recommend a book for my reading level."
+          ]
+        }
+    </script>
+    <script th:src="@{/js/chatbot.js}"></script>
+</body>
+</html>

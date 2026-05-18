@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Aura Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="auth-body">
+    <main class="auth-shell">
+        <section class="hero-card glass">
+            <h1>Find your book aura.</h1>
+        </section>
+
+        <section class="login-card glass">
+            <h2>Welcome back</h2>
+            <p>Log in as one of the predefined users.</p>
+
+            <form th:action="@{/login}" method="post" class="login-form">
+                <label for="username">Username</label>
+                <input id="username" name="username" type="text" placeholder="alice or bob" required>
+
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" placeholder="alice123 or bob123" required>
+
+                <p class="error" th:if="${error}" th:text="${error}"></p>
+
+                <button type="submit">Enter library</button>
+            </form>
+
+            <div class="demo-users">
+                <div>
+                    <strong>Alice</strong>
+                    <span>alice123 · Science Fiction · Intermediate</span>
+                </div>
+                <div>
+                    <strong>Bob</strong>
+                    <span>bob123 · Mystery · Beginner</span>
+                </div>
+            </div>
+        </section>
+    </main>
+    <section class="chatbot-widget">
+        <button id="chatToggle" class="chat-toggle">Chat</button>
+        <div id="chatPanel" class="chat-panel glass">
+            <h3>Book assistant</h3>
+            <div id="chatStarters" class="chat-starters"></div>
+            <div id="chatMessages" class="chat-messages"></div>
+            <form id="chatForm" class="chat-form">
+                <input id="chatInput" placeholder="Ask about RDF books..." required>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </section>
+    <script id="chatbotContext" type="application/json">
+        {
+          "pageContext": "Login page for Alice or Bob.",
+          "starters": [
+            "What can this book assistant do?",
+            "How do I get personalized recommendations?",
+            "Which demo user should I try?"
+          ]
+        }
+    </script>
+    <script th:src="@{/js/chatbot.js}"></script>
+</body>
+</html>
