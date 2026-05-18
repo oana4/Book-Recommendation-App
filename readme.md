@@ -23,6 +23,3 @@ Modeled OWL ontology in Protégé
 Developed SPARQL queries
 Assisted with backend routes and data handling
 Designed frontend pages
-
-D3.js
-Spring Boot
