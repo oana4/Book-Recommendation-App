@@ -9,21 +9,6 @@ Interactive graph visualization of RDF triples using D3.js
 Context-aware RAG chatbot with grounded answers
 RDF/XML parsing, validation, and upload support
 
-#Tech Stack
-
-Java 17+, Spring Boot, Maven
-Apache Jena
-RDF/OWL, Protégé (optional)
-D3.js
-Vector database + LLM APIs (OpenAI, Google, OpenRouter, LM Studio)
-
-#Roadmap
-
-Incremental vector reindexing
-Turtle and JSON-LD support
-GraphDB integration
-Feedback-based ranking
-
 #Authors
 
 Lascu Oana — Main Developer / Team Lead
